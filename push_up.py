@@ -1,3 +1,5 @@
+from pull_up_f import pull_up
+
 def read_total_pushups_from_file():
     try:
         with open("total_pushups.txt", "r") as file:
@@ -55,14 +57,54 @@ def xamp():
         else:
             raise ValueError("Type either a number \n type 'c' to continue or 'e' to exit.")
 
-while True:
-    functionReturnV = xamp()
-    totalPushUpsToday_sum += functionReturnV
-    totalPushUpsToday_list.append(functionReturnV)
+functionReturnV = xamp()
+totalPushUpsToday_sum += functionReturnV
+totalPushUpsToday_list.append(functionReturnV)
 
-    continue_or_exit = input("Do you want to add more push-ups? (y/n) \n press ENTER to see sum \n write 'pull' to switch to pull-ups \n write 'sit' to switch to sit-ups ")
-    if continue_or_exit.lower() != "y":
-        break
+def true():
+    global totalPushUpsToday_sum, totalPushUpsToday_list
+    
+    while True:
+        print("You have done push-ups today like:", totalPushUpsToday_list)
+        print("Total push-ups today:", totalPushUpsToday_sum)
+        continue_or_exit = input(
+        '''
+Do you want to add more push-ups? write 'y'  
+write 'n' to exit 
+write 'reset' to reset the counter for today 
+write 'pop' to delete the last insertion 
+write 'pull' to switch to pull-ups 
+write 'sit' to switch to sit-ups 
+type here:
+        ''')
+        
+        if continue_or_exit.lower() == 'n':
+            break
+        elif continue_or_exit.lower() == 'y':
+            functionReturnV = xamp()
+            totalPushUpsToday_sum += functionReturnV
+            totalPushUpsToday_list.append(functionReturnV)
+        elif continue_or_exit.lower() == 'pull':
+            pull_up.pull_up_func()  
+        elif continue_or_exit.lower() == 'reset':
+            totalPushUpsToday_sum = 0
+            totalPushUpsToday_list = []
+            write_total_pushups_to_file(totalPushUpsToday_sum)
+            write_total_pushups_like_to_file(totalPushUpsToday_list)
+            print(totalPushUpsToday_sum)
+            print(totalPushUpsToday_list)
+        elif continue_or_exit.lower() == 'pop':
+            if totalPushUpsToday_list:
+                last_pushup_count = totalPushUpsToday_list.pop()
+                totalPushUpsToday_sum -= last_pushup_count
+                write_total_pushups_to_file(totalPushUpsToday_sum)
+                write_total_pushups_like_to_file(totalPushUpsToday_list)
+            else:
+                print("There are no entries to pop.")
+            print(totalPushUpsToday_sum)
+            print(totalPushUpsToday_list)
+        else:
+            pass
 
 # Write the totalPushUpsToday_sum to total_pushups.txt
 write_total_pushups_to_file(totalPushUpsToday_sum)
@@ -70,5 +112,4 @@ write_total_pushups_to_file(totalPushUpsToday_sum)
 # Write the totalPushUpsToday_list to total_pushups_like.txt
 write_total_pushups_like_to_file(totalPushUpsToday_list)
 
-print("You have done push-ups today like:", totalPushUpsToday_list)
-print("Total push-ups today:", totalPushUpsToday_sum)
+true()
