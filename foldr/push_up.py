@@ -105,6 +105,12 @@ type here:
             print(totalPushUpsToday_list)
         else:
             pass
+    
+    # Remove all occurrences of 0 from the list
+for nullx in totalPushUpsToday_list:
+    if (nullx == 0):
+        totalPushUpsToday_list.remove(nullx)
+
 
 # Write the totalPushUpsToday_sum to total_pushups.txt
 write_total_pushups_to_file(totalPushUpsToday_sum)
