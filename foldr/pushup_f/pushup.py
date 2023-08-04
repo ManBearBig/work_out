@@ -1,4 +1,4 @@
-from /pullup_f import pullup
+from ..pullup_f import pullup
 
 def read_total_pushups_from_file():
     try:
