@@ -1,4 +1,4 @@
-from pull_up_f import pull_up
+from /pullup_f import pullup
 
 def read_total_pushups_from_file():
     try:
@@ -51,15 +51,16 @@ def xamp():
         return pushUpsNow
     except ValueError:
         if pushUpsNow.lower() == 'c':
-            return 0
+            return None
         elif pushUpsNow.lower() == 'e':
             raise SystemExit("Exiting the program.")
         else:
             raise ValueError("Type either a number \n type 'c' to continue or 'e' to exit.")
 
 functionReturnV = xamp()
-totalPushUpsToday_sum += functionReturnV
-totalPushUpsToday_list.append(functionReturnV)
+if functionReturnV is not None:
+    totalPushUpsToday_sum += functionReturnV
+    totalPushUpsToday_list.append(functionReturnV)
 
 def true():
     global totalPushUpsToday_sum, totalPushUpsToday_list
@@ -82,8 +83,9 @@ type here:
             break
         elif continue_or_exit.lower() == 'y':
             functionReturnV = xamp()
-            totalPushUpsToday_sum += functionReturnV
-            totalPushUpsToday_list.append(functionReturnV)
+            if functionReturnV is not None:
+                totalPushUpsToday_sum += functionReturnV
+                totalPushUpsToday_list.append(functionReturnV)
         elif continue_or_exit.lower() == 'pull':
             pull_up.pull_up_func()  
         elif continue_or_exit.lower() == 'reset':
@@ -105,6 +107,10 @@ type here:
             print(totalPushUpsToday_list)
         else:
             pass
+    
+    # Remove all occurrences of 0 from the list
+    totalPushUpsToday_list = [x for x in totalPushUpsToday_list if x != 0]
+
 
 # Write the totalPushUpsToday_sum to total_pushups.txt
 write_total_pushups_to_file(totalPushUpsToday_sum)
